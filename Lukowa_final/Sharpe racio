@@ -1,0 +1,21 @@
+# Example data
+returns <- c(yearly_returns_SP500$Low[1], yearly_returns_SP500$Low[13],yearly_returns_SP500$Low[25], yearly_returns_SP500$Low[37], yearly_returns_SP500$Low[49],
+             yearly_returns_SP500$Low[61],yearly_returns_SP500$Low[73],yearly_returns_SP500$Low[85],yearly_returns_SP500$Low[97],yearly_returns_SP500$Low[109])
+risk_free_rate <- c(0.01, 0.02, 0.03, 0.04, 0.05,0.06, 0.07, 0.08, 0.09,0.095)
+years <- c(2013:2022)
+
+# Aggregate returns and risk-free rates on a yearly basis
+returns_yearly <- tapply(returns, format(as.Date(paste0(years, "-01-01")), "%Y"), mean)
+risk_free_rate_yearly <- tapply(risk_free_rate, format(as.Date(paste0(years, "-01-01")), "%Y"), mean)
+
+# Calculate excess returns
+excess_returns_yearly <- returns_yearly - risk_free_rate_yearly
+
+# Calculate standard deviation of excess returns
+sd_excess_returns_yearly <- sd(excess_returns_yearly)
+
+# Calculate Sharpe ratio on a yearly basis
+sharpe_ratio_yearly <- mean(excess_returns_yearly) / sd_excess_returns_yearly
+
+sharpe_ratio_yearly
+
